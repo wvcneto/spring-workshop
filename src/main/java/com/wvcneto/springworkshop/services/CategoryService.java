@@ -2,6 +2,7 @@ package com.wvcneto.springworkshop.services;
 
 import com.wvcneto.springworkshop.entities.Category;
 import com.wvcneto.springworkshop.repositories.CategoryRepository;
+import com.wvcneto.springworkshop.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,6 @@ public class CategoryService {
     public Category findById(Long id) {
         Optional<Category> category = categoryRepository.findById(id);
 
-        return category.get();
+        return category.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 }

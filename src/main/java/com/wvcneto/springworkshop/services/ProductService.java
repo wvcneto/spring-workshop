@@ -2,6 +2,7 @@ package com.wvcneto.springworkshop.services;
 
 import com.wvcneto.springworkshop.entities.Product;
 import com.wvcneto.springworkshop.repositories.ProductRepository;
+import com.wvcneto.springworkshop.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,6 @@ public class ProductService {
     public Product findById(Long id) {
         Optional<Product> product = productRepository.findById(id);
 
-        return product.get();
+        return product.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 }

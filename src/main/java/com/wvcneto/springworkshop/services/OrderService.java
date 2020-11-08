@@ -2,6 +2,7 @@ package com.wvcneto.springworkshop.services;
 
 import com.wvcneto.springworkshop.entities.Order;
 import com.wvcneto.springworkshop.repositories.OrderRepository;
+import com.wvcneto.springworkshop.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,6 @@ public class OrderService {
     public Order findById(Long id) {
         Optional<Order> order = orderRepository.findById(id);
 
-        return order.get();
+        return order.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 }
