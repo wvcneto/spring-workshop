@@ -1,14 +1,8 @@
 package com.wvcneto.springworkshop.config;
 
-import com.wvcneto.springworkshop.entities.Category;
-import com.wvcneto.springworkshop.entities.Order;
-import com.wvcneto.springworkshop.entities.Product;
-import com.wvcneto.springworkshop.entities.User;
+import com.wvcneto.springworkshop.entities.*;
 import com.wvcneto.springworkshop.entities.enums.OrderStatus;
-import com.wvcneto.springworkshop.repositories.CategoryRepository;
-import com.wvcneto.springworkshop.repositories.OrderRepository;
-import com.wvcneto.springworkshop.repositories.ProductRepository;
-import com.wvcneto.springworkshop.repositories.UserRepository;
+import com.wvcneto.springworkshop.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +27,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -52,10 +49,16 @@ public class TestConfig implements CommandLineRunner {
         Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
         Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 
+        OrderItem oi1 = new OrderItem(order1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(order1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(order2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(order2, p5, 2, p5.getPrice());
+
         userRepository.saveAll(Arrays.asList(user1, user2));
         orderRepository.saveAll(Arrays.asList(order1, order2));
         categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
         productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+        orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 
         p1.getCategories().add(cat2);
         p2.getCategories().add(cat1);
